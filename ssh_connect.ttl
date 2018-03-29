@@ -1,0 +1,28 @@
+;============================================= 
+; Filename    : ssh_connect.ttl 
+; Description : SSH Auto login 
+; Author      : gekal
+; Created     : 2018/03/30 
+; modified    : 
+;============================================== 
+;; 接続先ホスト／接続先ポート／ユーザ名／パスワード設定 
+HOSTADDR = '127.0.0.1' 
+HOSTPORT = '10022' 
+USERNAME = 'vagrant' 
+getdir KEYFILEPATH
+strconcat KEYFILEPATH '\.vagrant\machines\default\virtualbox\private_key'
+;============================================== 
+;; ①コマンド組立て 
+COMMAND = HOSTADDR 
+strconcat COMMAND ':' 
+strconcat COMMAND HOSTPORT 
+strconcat COMMAND ' /ssh /2 /auth=publickey /user=' 
+strconcat COMMAND USERNAME 
+strconcat COMMAND ' /keyfile=' 
+strconcat COMMAND KEYFILEPATH
+ 
+;; ②接続 
+connect COMMAND
+ 
+;; ③マクロ終了 
+end
